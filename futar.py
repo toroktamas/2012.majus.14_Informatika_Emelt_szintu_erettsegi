@@ -45,22 +45,18 @@ print("2. feladat")
 """Ki kell irni a het elso utjanak hosszat. Figyelni kell ha nincs 1 es az allomanyan akkor 2 est kell kiirni. """
 nap = []
 for a in ut.values():
-    nap.append(int(a["Het napja"]))    
-
+    nap.append(int(a["Het napja"]))
 for g in ut.values():
-    if 1 not in nap:
-        if g["Het napja"] == 2 and g['Kiszallitas szama'] == 1:            
-            print("A het elso napjanak elos utjanak hossza: {} kilometer".format(g['Fuvar tavolsag']))
-    else:
-        if g["Het napja"] == 1 and g['Kiszallitas szama'] == 1:            
-            print("A het elso napjanak elso utjanak hossza: {} kilometer.".format(g['Fuvar tavolsag']))
+    if g['Het napja'] == min(nap) and g['Kiszallitas szama'] == 1:            
+        print("A het elso napjanak elos utjanak hossza: {} kilometer".format(g['Fuvar tavolsag']))
 
 print("3. feladat")
 """Kepernyore kiiratni hogy mekkora volt az utolso ut a heten kmerben. """
 utolso_ut = []
 for e in ut.values():
-    if e["Het napja"] == max(nap):
-        utolso_ut.append(int(e["Kiszallitas szama"]))
+    if e['Het napja'] == max(nap):
+        utolso_ut.append(int(e['Kiszallitas szama']))
+
 for d in ut.values():
     if d["Het napja"] == int(max(nap)) and d['Kiszallitas szama'] == int(max(utolso_ut)):
         print("A het utolso napjanak az utolso szallitasan:{} hosszu volt az ut kilometerben.".format(d["Fuvar tavolsag"]))
@@ -115,7 +111,7 @@ print("{0} kell fizetni {1} ennyi utert".format(fizetes(bekeres), bekeres))
 print("8. feladat")
 """Meg kell hatarozni minden ut ellen erteket.Es ki kell irni a dijazas.txt--fajlba.Sorrendben. """
 with open("dijazas.txt","wt",encoding="utf-8") as h:
-    for v in sorted(ut.values(), key=lambda v:v["Het napja"]):   
+    for v in sorted(ut.values(), key=lambda v:v["Het napja"]*100+v["Kiszallitas szama"]):   
         h.write("{0}.nap {1}. ut: {2} Ft \n".format(v["Het napja"], v["Kiszallitas szama"], v["Fizetendo osszeg"]))
 
 
